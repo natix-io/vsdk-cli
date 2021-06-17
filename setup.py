@@ -21,3 +21,4 @@ setup(
     },
     version='1.0',
 )
+# git+https://gitlab+deploy-token-488366:iCjAsvbmVEMd_xeayAh-@gitlab.com/natix/cvison/vsdkx/vsdkx-cli

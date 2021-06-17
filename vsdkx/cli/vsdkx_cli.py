@@ -30,6 +30,14 @@ def install(package):
         print(f"No package {package} found")
 
 
+def uninstall(package):
+    try:
+        subprocess.check_call([sys.executable, "-m", "pip", "uninstall",
+                               package])
+    except:
+        pass
+
+
 def config():
     endpoint = input("S3 Endpoint:")
     access_key = input("S3 Access key:")
@@ -127,6 +135,7 @@ def remove_weight(args):
 
 def remove_model(args):
     model = args[0]
+    uninstall(f"vsdkx-model-{model}")
     current_profile = "vsdkx/model/profile.yaml"
     if os.path.exists(current_profile):
         with open(current_profile, "r") as file:
@@ -142,7 +151,8 @@ def remove_model(args):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("command",
-                        choices=('model', 'weight', 'clean', 'config'))
+                        choices=(
+                        'model', 'weight', 'clean', 'config', 'addon'))
     parser.add_argument("subcommand", choices=('set', 'add', 'remove', ''),
                         default="", nargs="?")
     argcomplete.autocomplete(parser)
@@ -161,6 +171,11 @@ def main():
         clean_all()
     elif args.command == "config":
         config()
+    elif args.command == "addon":
+        if args.subcommand == "add" or args.subcommand == "set":
+            install(f"vsdkx-addon-{unknown[0]}")
+        if args.subcommand == "remove":
+            uninstall(f"vsdkx-addon-{unknown[0]}")
 
 
 if __name__ == "__main__":

@@ -22,10 +22,35 @@ manifest = {
 }
 
 
+def modify_requirement(package, remove=False):
+    lines = []
+    skip = False
+    requirements = "requirements.txt"
+    if os.path.exists(requirements):
+        with open(requirements, "r") as file:
+            for l in file:
+                line = l.strip()
+                if not line.startswith(package):
+                    lines.append(line)
+                else:
+                    if not remove:
+                        skip = True
+                        break
+    if not skip:
+        with open(requirements, "w") as file:
+            for l in lines:
+                file.write(l)
+                file.write("\n")
+            if not remove:
+                file.write(package)
+                file.write("\n")
+
+
 def install(package):
     if manifest.get(package) is not None:
         subprocess.check_call([sys.executable, "-m", "pip", "install",
                                manifest[package]])
+        modify_requirement(package)
     else:
         print(f"No package {package} found")
 
@@ -34,6 +59,7 @@ def uninstall(package):
     try:
         subprocess.check_call([sys.executable, "-m", "pip", "uninstall",
                                package])
+        modify_requirement(package, True)
     except:
         pass
 
@@ -152,7 +178,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("command",
                         choices=(
-                        'model', 'weight', 'clean', 'config', 'addon'))
+                            'model', 'weight', 'clean', 'config', 'addon'))
     parser.add_argument("subcommand", choices=('set', 'add', 'remove', ''),
                         default="", nargs="?")
     argcomplete.autocomplete(parser)

@@ -38,7 +38,7 @@ def modify_requirement(package, remove=False):
                         skip = True
                         break
     if not skip:
-        if remove and not os.path.exists("requirements.txt"):
+        if remove and not os.path.exists(requirements):
             return
         with open(requirements, "w") as file:
             for l in lines:

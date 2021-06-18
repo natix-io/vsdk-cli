@@ -61,13 +61,17 @@ def modify_requirement(package, remove=False):
                 file.write("\n")
 
 
-def modify_app(name, remove=False):
+def modify_app(name: str, remove=False):
     lines = [name]
     path = "vsdkx/.config"
     if os.path.exists(path):
         with open(path, "r") as file:
             for l in file:
-                lines.append(l.strip())
+                if name.startswith("model-"):
+                    if l.strip().startswith("model-"):
+                        continue
+                else:
+                    lines.append(l.strip())
     lines = sorted(set(lines))
     if remove:
         lines.remove(name)

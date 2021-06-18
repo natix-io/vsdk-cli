@@ -84,3 +84,8 @@ You can also configure the drawing properties for debug mode by useing:
 ```
 vsdkx-cli app draw
 ```
+
+You can see the list of models and addons in you project by using:
+```
+vsdkx-cli app list
+```

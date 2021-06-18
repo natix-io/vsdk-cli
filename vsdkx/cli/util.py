@@ -67,7 +67,7 @@ def modify_app(name: str, remove=False):
     if os.path.exists(path):
         with open(path, "r") as file:
             for l in file:
-                if name.startswith("model-"):
+                if not remove and name.startswith("model-"):
                     if l.strip().startswith("model-"):
                         continue
                 else:

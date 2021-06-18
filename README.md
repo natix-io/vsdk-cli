@@ -37,7 +37,7 @@ currently these addons are available:
 To set new configuration for the repo that vsdk-cli is searching for the models
 and addons you can use:
 ```
-vsdkx-cli config
+vsdkx-cli repo
 ```
 **Notice:** *You should run all the vsdkx-cli command inside your project 
 directory*

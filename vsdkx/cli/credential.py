@@ -15,7 +15,7 @@ def repo_config():
 
 
 def read_secret():
-    assert os.path.exists(".secret"), "You should run config first"
+    assert os.path.exists(".secret"), "You should run repo first"
     with open(".secret", "r") as f:
         endpoint = f.readline().strip()
         access_key = f.readline().strip()

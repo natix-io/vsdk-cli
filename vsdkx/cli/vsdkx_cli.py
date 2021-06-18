@@ -1,12 +1,13 @@
-import argparse, argcomplete, sys, os, shutil
+import argparse, argcomplete, os, shutil
 from getpass import getpass
-import io
+import re
 from minio import Minio, S3Error
 import yaml
 import subprocess
 import sys
 
 POSTFIX_MODEL = "-product"
+NAME_REGEX = "^([A-Za-z0-9\-.:])+$"
 
 manifest = {
     "vsdkx-model-yolo-torch": "git+https://gitlab+deploy-token-488362:aQbEo4kAqEhppoUe3Tyh@gitlab.com/natix/cvison/vsdkx/vsdkx-model-yolo-torch",
@@ -37,6 +38,8 @@ def modify_requirement(package, remove=False):
                         skip = True
                         break
     if not skip:
+        if remove and not os.path.exists("requirements.txt"):
+            return
         with open(requirements, "w") as file:
             for l in lines:
                 file.write(l)
@@ -107,7 +110,7 @@ def download_weight(args):
         minio = Minio(endpoint, access_key, secret_key, secure=secure)
         create_folder("vsdkx/weight")
         path = f"vsdkx/weight/{weight}"
-        assert not weight.startswith(".") and not weight.startswith("/"), \
+        assert re.match(NAME_REGEX, weight), \
             "Weight name is not right"
         try:
             minio.fget_object(bucket_name, weight, path)
@@ -129,6 +132,8 @@ def download_weight(args):
 def add_model(args):
     endpoint, access_key, secret_key, secure = read_secret()
     model = args[0]
+    assert re.match(NAME_REGEX, model), \
+        "model name is not right"
     install(f"vsdkx-model-{model}")
     create_folder("vsdkx")
     create_folder("vsdkx/model")
@@ -174,6 +179,18 @@ def remove_model(args):
     remove_weight(args)
 
 
+def install_addon(args):
+    assert re.match(NAME_REGEX, args[0]), \
+        "addon name is not right"
+    install(f"vsdkx-addon-{args[0]}")
+
+
+def uninstall_addon(args):
+    assert re.match(NAME_REGEX, args[0]), \
+        "addon name is not right"
+    uninstall(f"vsdkx-addon-{args[0]}")
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("command",
@@ -199,9 +216,9 @@ def main():
         config()
     elif args.command == "addon":
         if args.subcommand == "add" or args.subcommand == "set":
-            install(f"vsdkx-addon-{unknown[0]}")
+            install_addon(unknown)
         if args.subcommand == "remove":
-            uninstall(f"vsdkx-addon-{unknown[0]}")
+            uninstall_addon(unknown)
 
 
 if __name__ == "__main__":

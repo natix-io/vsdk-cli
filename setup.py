@@ -14,7 +14,8 @@ setup(
         'vsdkx-core',
         'argparse',
         'argcomplete',
-        'minio'
+        'minio',
+        'pyyaml'
     ],
     entry_points = {
         'console_scripts': ['vsdkx-cli=vsdkx.cli.vsdkx_cli:main'],

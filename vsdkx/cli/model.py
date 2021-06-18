@@ -52,4 +52,18 @@ def remove_model(args):
             with open(current_profile, "w") as file:
                 yaml.dump(data, file)
     modify_app(f"model-{model}", True)
+    remove_model_from_setting(model)
     remove_weight(args)
+
+
+def remove_model_from_setting(name):
+    settings_path = "vsdkx/settings.yaml"
+    if os.path.exists(settings_path):
+        with open(settings_path, "r") as file:
+            settings = yaml.full_load(file)
+        if "model" in settings:
+            if "profile" in settings["model"]:
+                if settings["model"]["profile"] == name:
+                    settings.pop("model")
+                    with open(settings_path, "w") as file:
+                        yaml.dump(settings, file)

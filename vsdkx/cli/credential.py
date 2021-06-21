@@ -3,6 +3,9 @@ import os
 
 
 def repo_config():
+    """
+    Configure the repo to download models, weight, addons from that server
+    """
     endpoint = input("S3 Endpoint:")
     access_key = input("S3 Access key:")
     secret_key = getpass("S3 Secret key:")
@@ -15,6 +18,13 @@ def repo_config():
 
 
 def read_secret():
+    """
+    Read credentials and informations of our repo
+
+    Returns:
+        (str, str, str, bool): endpoint, access_key, secret_key, secure of the
+        repo that is configured
+    """
     assert os.path.exists(".secret"), "You should run repo first"
     with open(".secret", "r") as f:
         endpoint = f.readline().strip()

@@ -5,6 +5,9 @@ from vsdkx.cli.app import ask_for_config
 
 
 def config_drawing():
+    """
+    Configure the drawing section in vsdkx/settings.yaml
+    """
     settings_path = "vsdkx/settings.yaml"
     settings = {}
     if os.path.exists(settings_path):

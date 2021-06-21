@@ -4,6 +4,12 @@ import re, os, yaml
 
 
 def install_addon(args):
+    """
+    Install addon to current project
+
+    Args:
+        args: args[0] should be the name of the addon
+    """
     assert re.match(NAME_REGEX, args[0]), \
         "addon name is not right"
     install(f"vsdkx-addon-{args[0]}")
@@ -12,6 +18,13 @@ def install_addon(args):
 
 
 def uninstall_addon(args):
+    """
+    Uninstall addon from current project
+
+    Args:
+        args: args[0] should be the name of the addon
+
+    """
     assert re.match(NAME_REGEX, args[0]), \
         "addon name is not right"
     uninstall(f"vsdkx-addon-{args[0]}")
@@ -21,6 +34,12 @@ def uninstall_addon(args):
 
 
 def remove_addon_from_setting(name):
+    """
+    Removes config section for specific addon from vsdkx/settings.yaml
+
+    Args:
+        name: name of the addon
+    """
     settings_path = "vsdkx/settings.yaml"
     if os.path.exists(settings_path):
         with open(settings_path, "r") as file:

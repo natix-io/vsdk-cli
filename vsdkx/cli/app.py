@@ -6,6 +6,9 @@ from vsdkx.cli.util import ask_for_config
 
 
 def init_app():
+    """
+    Adds boilerplate codes to current project
+    """
     if not os.path.exists("vsdkx-run.py"):
         _ROOT = os.path.abspath(os.path.dirname(__file__))
         path = os.path.join(_ROOT, 'vsdkx-run.py')
@@ -14,6 +17,14 @@ def init_app():
 
 
 def app_config(name, settings):
+    """
+    Configures a specific model or addon and adds data to vsdkx/settings.yaml
+
+    Args:
+        name: the name of the model or addon, this should start with model- or
+        addon-
+        settings: the data dictionary of vsdkx/settings.yaml file
+    """
     if name in config_data:
         if name.startswith("model-"):
             if "model" not in settings:
@@ -37,6 +48,13 @@ def app_config(name, settings):
 
 
 def app_reconfig(unknown):
+    """
+    Parses the rest of the cli arguments to add model or addon to
+    current project
+
+    Args:
+        unknown: the rest of cli arguments
+    """
     path = "vsdkx/.config"
     settings_path = "vsdkx/settings.yaml"
     settings = {}
@@ -58,6 +76,9 @@ def app_reconfig(unknown):
 
 
 def list_app():
+    """
+    Prints the models and addons which is installed in current project
+    """
     path = "vsdkx/.config"
     if os.path.exists(path):
         lines = []

@@ -6,6 +6,12 @@ from vsdkx.cli.util import create_folder
 
 
 def download_weight(args):
+    """
+    Downloads weight file from repo
+
+    Args:
+        args: args[0] is the model name and args[1] is the weight file name
+    """
     endpoint, access_key, secret_key, secure = read_secret()
     model = args[0]
     weight: str = args[1] if len(args) > 1 else None
@@ -36,6 +42,12 @@ def download_weight(args):
 
 
 def remove_weight(args):
+    """
+    Removes weight file from current project
+
+    Args:
+        args: args[1] is the weight file name
+    """
     weight = args[1] if len(args) > 1 else None
     print(f"Removing weight {weight} ...")
     if weight is not None:

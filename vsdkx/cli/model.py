@@ -10,6 +10,13 @@ from vsdkx.cli.weight import download_weight, remove_weight
 
 
 def add_model(args):
+    """
+    Add a model driver to current project
+
+    Args:
+        args: args[0] is the name of the model and args[1] is optional and is
+        the name of the weight file that we want to use for this model driver
+    """
     endpoint, access_key, secret_key, secure = read_secret()
     model = args[0]
     print(f"Adding model {model} ...")
@@ -41,6 +48,12 @@ def add_model(args):
 
 
 def remove_model(args):
+    """
+    Removes model driver from current project
+
+    Args:
+        args: args[0] is the name of the model driver
+    """
     model = args[0]
     uninstall(f"vsdkx-model-{model}")
     current_profile = "vsdkx/model/profile.yaml"
@@ -57,6 +70,12 @@ def remove_model(args):
 
 
 def remove_model_from_setting(name):
+    """
+    Remove model section from vsdkx/settings.yaml for specific model name
+
+    Args:
+        name: the name of the model driver
+    """
     settings_path = "vsdkx/settings.yaml"
     if os.path.exists(settings_path):
         with open(settings_path, "r") as file:

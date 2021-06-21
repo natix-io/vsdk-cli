@@ -19,7 +19,7 @@ config_data = {
         "_class": "vsdkx.model.resnet.driver.ResnetDriver",
         "image_type": "BGR",
         "device": "cpu",
-        "thresold": 0.16,
+        "threshold": 0.16,
         "video_fps_rate": 20,
     },
     "model-mobilenet": {

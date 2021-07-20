@@ -4,6 +4,7 @@ add/remove any *vsdkx addons* or *vsdkx models* to your project.
 ###How to install
 To install this client you can easily use *pip*.
 ```
+pip install git+https://gitlab+deploy-token-485942:VJtus51fGR59sMGhxHUF@gitlab.com/natix/cvison/vsdkx/vsdkx-core.git
 pip install git+https://gitlab+deploy-token-488366:iCjAsvbmVEMd_xeayAh-@gitlab.com/natix/cvison/vsdkx/vsdkx-cli
 ```
 After this you can use **vsdkx-cli** which is installed in the *PATH*
@@ -21,9 +22,9 @@ currently these models and weights are available
 |yolo-torch|default.pt, best.pt|
 |yolo-tflite|default.pt, best.pt|
 |yolo-facemask|default.pt, best.pt|
-|yolo-bayesian|default.pt, best.pt|
-|yolo-resnet|default.pt, best.pt|
-|yolo-mobilenet|default.pt, best.pt|
+|bayesian|default.pt, best.pt|
+|resnet|default.pt, best.pt|
+|mobilenet|default.pt, best.pt|
 To add any addon to your project you can use:
 ```
 vsdkx-cli addon add {addon_name}
@@ -88,4 +89,77 @@ vsdkx-cli app draw
 You can see the list of models and addons in you project by using:
 ```
 vsdkx-cli app list
+```
+
+### Hidden Files
+This cli will create two hidden files `.secret` which has the credential 
+information for the registry that we are using to download wieght files 
+and other data, and `.config` file which stores the list of `addons` and 
+`model-drivers` for this project.
+
+### Profile
+`profile.yaml` is a file inside `visionx/model` and we can configure the model 
+that we are going to use with its attributes. it should have 
+following structure.
+```yaml
+profile-name:
+# All the required parameter for that specific model
+  classes_len: 
+  input_shape:
+  model_path: # path to weight file
+  ...
+    
+```
+We can have multiple profiles and we can pass `profile-name` to the driver to 
+use that specific values.
+
+### Settings
+`settings.yaml` is a file inside `visionx` directory and has 
+following structure.
+```yaml
+addons:
+    addon-name:
+      class:  # the class of the addon, each addon has a specific class, it will be added automatically if you use cli to add addons to your project
+      ... # other properties required by that addon like distance_threshold, max_disappeared, etc that we need to use for tracking addon
+model:
+    class: # this is the class of the model driver we want to use for this project, it will be added automatically if you use cli to add model-driver to your project
+    debug: # If this value is true it will show debug window with some simple drawings, like zonings, bboxes and etc.
+    profile: # the name of the profile we want to use for our model driver
+    settings:
+      ... # all other dynamic settings the we can pass to our model driver
+drawing: # this is optional if we want to have debug window with minimal drawing feature, this dictionary will also be passed to addons and model-drivers so if developers need to debug something there they can set drawing configs here.
+  box_font_scale: 0.8
+  box_thickness: 3
+  group_color: !!python/tuple
+  - 135
+  - 206
+  - 235
+  rectangle_color: !!python/tuple
+  - 60
+  - 179
+  - 113
+  text_color: !!python/tuple
+  - 255
+  - 255
+  - 255
+  text_fontscale: 1
+  text_thickness: 1
+  zone_thickness: 3
+  zones:
+  - - - 538
+      - 226
+    - - 837
+      - 213
+    - - 877
+      - 656
+    - - 589
+      - 674
+    - - 538
+      - 226
+  zones_color: !!python/tuple
+  - 153
+  - 50
+  - 204
+
+# we can pass this yaml file through gRPC to our project or via command line
 ```

@@ -93,7 +93,7 @@ vsdkx-cli app list
 
 ### Hidden Files
 This cli will create two hidden files `.secret` which has the credential 
-information for the registry that we are using to download wieght files 
+information for the registry that we are using to download weight files 
 and other data, and `.config` file which stores the list of `addons` and 
 `model-drivers` for this project.
 

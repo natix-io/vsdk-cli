@@ -1,7 +1,7 @@
 **vsdkx-cli** is a cli tool to facilitate the usage of **vsdkx**. you can
 add/remove any *vsdkx addons* or *vsdkx models* to your project.
 
-###How to install
+### How to install
 To install this client you can easily use *pip*.
 ```
 pip install git+https://gitlab+deploy-token-485942:VJtus51fGR59sMGhxHUF@gitlab.com/natix/cvison/vsdkx/vsdkx-core.git
@@ -9,7 +9,7 @@ pip install git+https://gitlab+deploy-token-488366:iCjAsvbmVEMd_xeayAh-@gitlab.c
 ```
 After this you can use **vsdkx-cli** which is installed in the *PATH*
 
-###How to use
+### Usage
 To install *vsdkx models* you can use easily go to your project and run 
 ```
 vsdkx-cli model add {model_name} {weight_name}
@@ -81,7 +81,7 @@ vsdkx-cli app config
 now to use the `vsdkx-run.py` you can run `python vsdkx-run.py -h` to see 
 the usage
 
-You can also configure the drawing properties for debug mode by useing:
+You can also configure the drawing properties for debug mode by using:
 ```
 vsdkx-cli app draw
 ```
@@ -90,6 +90,34 @@ You can see the list of models and addons in you project by using:
 ```
 vsdkx-cli app list
 ```
+You can either use `SimpleRunner` which can bring up the application and you 
+can pass required settings through gRPC or command line arguments.
+```python
+from vsdkx.core.runner import SimpleRunner
+
+SimpleRunner().run()
+```
+or you can import `EventDetector` manually and pass the required settings to
+its constructor.
+```python
+from vsdkx.core.util import io
+from vsdkx.core.detector import EventDetector
+
+detector = EventDetector(io.import_yaml("Path to settings.yaml"))
+result = detector.detect(image)
+```
+You can see the [Settings](#Settings) section to see the structure of 
+the configurations.
+
+If you prefer to use `SimpleRunner` you can pass a function to its constructor 
+to get the result of the model that way.
+```python
+from vsdkx.core.runner import SimpleRunner
+
+SimpleRunner(lambda image, inference: {
+    # do anything you want with inference.
+}).run()
+``` 
 
 ### Hidden Files
 This cli will create two hidden files `.secret` which has the credential 

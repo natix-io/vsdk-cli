@@ -4,7 +4,8 @@ add/remove any *vsdkx addons* or *vsdkx models* to your project.
 ### How to install
 To install this client you can easily use *pip*.
 ```
-pip install https://github.com/natix-io/vsdkx-core
+pip install git+https://github.com/natix-io/vsdkx-core
+pip install git+https://github.com/natix-io/vsdkx-cli
 ```
 After this you can use **vsdkx-cli** which is installed in the *PATH*
 

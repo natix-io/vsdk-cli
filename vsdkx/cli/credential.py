@@ -9,12 +9,15 @@ def repo_config():
     endpoint = input("S3 Endpoint:")
     access_key = input("S3 Access key:")
     secret_key = getpass("S3 Secret key:")
+    region = input("S3 region:")
     with open(".secret", "w") as f:
         f.write(endpoint.strip())
         f.write("\n")
         f.write(access_key)
         f.write("\n")
         f.write(secret_key)
+        f.write("\n")
+        f.write(region)
 
 
 def read_secret():

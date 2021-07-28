@@ -27,8 +27,8 @@ def read_secret():
     """
     if not os.path.exists(".secret"):
         return 's3.amazonaws.com', \
-               'AKIATDB52A5XIEM3FLMN', \
-               'mfVrBhVQDid3xbE6uvYhoVzHvmxVXhvIJ/JYcQ/R', \
+               '', \
+               '', \
                'eu-central-1', \
                True
     with open(".secret", "r") as f:

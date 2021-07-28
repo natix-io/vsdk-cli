@@ -17,7 +17,7 @@ def add_model(args):
         args: args[0] is the name of the model and args[1] is optional and is
         the name of the weight file that we want to use for this model driver
     """
-    endpoint, access_key, secret_key, secure = read_secret()
+    endpoint, access_key, secret_key, region, secure = read_secret()
     model = args[0]
     print(f"Adding model {model} ...")
     assert re.match(NAME_REGEX, model), \
@@ -27,7 +27,8 @@ def add_model(args):
     create_folder("vsdkx/model")
     current_profile = "vsdkx/model/profile.yaml"
     bucket_name = f"{model}{POSTFIX_MODEL}"
-    minio = Minio(endpoint, access_key, secret_key, secure=secure)
+    minio = Minio(endpoint, access_key, secret_key, region=region,
+                  secure=secure)
     try:
         response = minio.get_object(bucket_name, "profile.yaml")
         dict1 = yaml.full_load(response)

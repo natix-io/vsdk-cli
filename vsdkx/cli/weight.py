@@ -12,13 +12,14 @@ def download_weight(args):
     Args:
         args: args[0] is the model name and args[1] is the weight file name
     """
-    endpoint, access_key, secret_key, secure = read_secret()
+    endpoint, access_key, secret_key, region, secure = read_secret()
     model = args[0]
     weight: str = args[1] if len(args) > 1 else None
     if weight is not None:
         print(f"Downloading {weight} ...")
         bucket_name = f"{model}{POSTFIX_MODEL}"
-        minio = Minio(endpoint, access_key, secret_key, secure=secure)
+        minio = Minio(endpoint, access_key, secret_key, region= region,
+                      secure=secure)
         create_folder("vsdkx/weight")
         path = f"vsdkx/weight/{weight}"
         assert re.match(NAME_REGEX, weight), \

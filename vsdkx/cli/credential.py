@@ -22,15 +22,21 @@ def read_secret():
     Read credentials and informations of our repo
 
     Returns:
-        (str, str, str, bool): endpoint, access_key, secret_key, secure of the
+        (str, str, str, str, bool): endpoint, access_key, secret_key, secure of the
         repo that is configured
     """
-    assert os.path.exists(".secret"), "You should run repo first"
+    if not os.path.exists(".secret"):
+        return 's3.amazonaws.com', \
+               'AKIATDB52A5XIEM3FLMN', \
+               'mfVrBhVQDid3xbE6uvYhoVzHvmxVXhvIJ/JYcQ/R', \
+               'eu-central-1', \
+               True
     with open(".secret", "r") as f:
         endpoint = f.readline().strip()
         access_key = f.readline().strip()
         secret_key = f.readline().strip()
+        region = f.readline().strip()
         secure = True if endpoint.startswith("https") else False
         endpoint = endpoint.replace("http://", "").replace("https://",
                                                            "").strip()
-    return endpoint, access_key, secret_key, secure
+    return endpoint, access_key, secret_key, region, secure

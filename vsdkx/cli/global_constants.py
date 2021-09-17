@@ -11,5 +11,7 @@ manifest = {
     "vsdkx-addon-distant": "git+https://github.com/natix-io/vsdkx-addon-distant.git",
     "vsdkx-addon-facemask": "git+https://github.com/natix-io/vsdkx-addon-facemask.git",
     "vsdkx-addon-tracking": "git+https://github.com/natix-io/vsdkx-addon-tracking.git",
-    "vsdkx-addon-zoning": "git+https://github.com/natix-io/vsdkx-addon-zoning.git"
+    "vsdkx-addon-zoning": "git+https://github.com/natix-io/vsdkx-addon-zoning.git",
+    "vsdkx-addon-group": "git+https://github.com/natix-io/vsdkx-addon-group.git",
+    "vsdkx-addon-depth": "https://github.com/natix-io/vsdkx-addon-depth.git"
 }
